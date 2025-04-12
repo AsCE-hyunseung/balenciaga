@@ -1,4 +1,4 @@
-package kr.co.musinsa.homework.exception
+package musinsa.homework.exception
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 
 @ControllerAdvice
 class GlobalExceptionHandler {
-    // 2) 그 외 예상치 못한 에러 처리
     @ExceptionHandler(Exception::class)
     fun handleCommonException(e: Exception): ResponseEntity<ErrorResponse> {
         val status = HttpStatus.INTERNAL_SERVER_ERROR
@@ -26,7 +25,3 @@ data class ErrorResponse(
     val message: String,
     val status: Int
 )
-
-class OutOfStockException(
-    message: String? = null
-) : RuntimeException(message)

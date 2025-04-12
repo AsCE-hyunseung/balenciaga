@@ -7,7 +7,7 @@ plugins {
     id 'org.jetbrains.kotlin.plugin.jpa' version '1.9.20'
 }
 
-group = 'kr.co.musinsa'
+group = 'musinsa.homework'
 version = '0.0.1-SNAPSHOT'
 
 repositories {

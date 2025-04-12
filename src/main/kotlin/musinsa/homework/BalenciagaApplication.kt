@@ -1,12 +1,12 @@
-package kr.co.musinsa.homework
+package musinsa.homework
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.builder.SpringApplicationBuilder
 
 @SpringBootApplication
-class HomeworkApplication
+class BalenciagaApplication
 
 fun main(args: Array<String>) {
-    SpringApplicationBuilder(HomeworkApplication::class.java)
+    SpringApplicationBuilder(BalenciagaApplication::class.java)
         .run(*args)
 }
