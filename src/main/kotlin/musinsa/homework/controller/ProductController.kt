@@ -1,8 +1,8 @@
 package musinsa.homework.controller
 
-import musinsa.homework.dto.CreateProductRequest
-import musinsa.homework.dto.ProductDto
-import musinsa.homework.dto.UpdateProductRequest
+import musinsa.homework.dto.product.CreateProductRequest
+import musinsa.homework.dto.product.ProductDto
+import musinsa.homework.dto.product.UpdateProductRequest
 import musinsa.homework.service.ProductService
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PatchMapping

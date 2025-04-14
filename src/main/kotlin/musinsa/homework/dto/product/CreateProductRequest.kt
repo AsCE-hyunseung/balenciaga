@@ -1,4 +1,4 @@
-package musinsa.homework.dto
+package musinsa.homework.dto.product
 
 data class CreateProductRequest(
     val price: Int,

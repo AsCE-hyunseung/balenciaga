@@ -1,4 +1,4 @@
-package musinsa.homework.dto
+package musinsa.homework.dto.product
 
 import musinsa.homework.domain.Product
 

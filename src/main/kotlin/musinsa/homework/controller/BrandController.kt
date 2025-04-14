@@ -1,8 +1,8 @@
 package musinsa.homework.controller
 
-import musinsa.homework.dto.BrandDto
-import musinsa.homework.dto.CreateBrandRequest
-import musinsa.homework.dto.UpdateBrandRequest
+import musinsa.homework.dto.brand.BrandDto
+import musinsa.homework.dto.brand.CreateBrandRequest
+import musinsa.homework.dto.brand.UpdateBrandRequest
 import musinsa.homework.service.BrandService
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PatchMapping

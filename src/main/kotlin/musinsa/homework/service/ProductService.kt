@@ -1,7 +1,7 @@
 package musinsa.homework.service
 
 import musinsa.homework.domain.Product
-import musinsa.homework.dto.ProductDto
+import musinsa.homework.dto.product.ProductDto
 import musinsa.homework.exception.DataNotFoundException
 import musinsa.homework.exception.ErrorCode
 import musinsa.homework.repository.BrandJpaRepository

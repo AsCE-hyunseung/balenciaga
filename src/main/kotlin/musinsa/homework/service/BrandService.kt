@@ -1,7 +1,7 @@
 package musinsa.homework.service
 
 import musinsa.homework.domain.Brand
-import musinsa.homework.dto.BrandDto
+import musinsa.homework.dto.brand.BrandDto
 import musinsa.homework.exception.DataNotFoundException
 import musinsa.homework.exception.ErrorCode.DATA_NOT_FOUND
 import musinsa.homework.exception.ErrorCode.POLICY_VIOLATION
