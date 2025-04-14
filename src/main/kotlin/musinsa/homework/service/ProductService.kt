@@ -4,6 +4,7 @@ import musinsa.homework.domain.Product
 import musinsa.homework.dto.product.ProductDto
 import musinsa.homework.exception.DataNotFoundException
 import musinsa.homework.exception.ErrorCode
+import musinsa.homework.exception.ParameterInvalidException
 import musinsa.homework.repository.BrandJpaRepository
 import musinsa.homework.repository.CategoryJpaRepository
 import musinsa.homework.repository.ProductJpaRepository
@@ -19,6 +20,7 @@ class ProductService(
 ) {
     @Transactional
     fun createProduct(price: Int, brandId: Long, categoryId: Long): ProductDto {
+        validatePrice(price)
         validateBrandAndCategory(brandId, categoryId)
         val product = Product(price = price, brandId = brandId, categoryId = categoryId)
         productJpaRepository.save(product)
@@ -27,6 +29,7 @@ class ProductService(
 
     @Transactional
     fun updateProduct(productId: Long, price: Int, categoryId: Long): ProductDto {
+        validatePrice(price)
         val product = findProductById(productId)
         product.update(price = price, categoryId = categoryId)
         return ProductDto.from(product)
@@ -50,6 +53,12 @@ class ProductService(
         }
         if (!categoryJpaRepository.existsById(categoryId)) {
             throw DataNotFoundException(ErrorCode.DATA_NOT_FOUND, "카테고리 정보를 찾을 수 없습니다.")
+        }
+    }
+
+    fun validatePrice(price: Int) {
+        if (price < 0) {
+            throw ParameterInvalidException(ErrorCode.INVALID_PARAMETER, "가격은 음수일 수 없습니다.")
         }
     }
 }
