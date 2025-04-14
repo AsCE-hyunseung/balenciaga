@@ -1,5 +1,7 @@
 package musinsa.homework.service
 
+import musinsa.homework.domain.Brand
+import musinsa.homework.domain.Category
 import musinsa.homework.domain.Product
 import musinsa.homework.dto.product.ProductDto
 import musinsa.homework.exception.DataNotFoundException
@@ -21,8 +23,9 @@ class ProductService(
     @Transactional
     fun createProduct(price: Int, brandId: Long, categoryId: Long): ProductDto {
         validatePrice(price)
-        validateBrandAndCategory(brandId, categoryId)
-        val product = Product(price = price, brandId = brandId, categoryId = categoryId)
+        val brand = findBrandById(brandId)
+        val category = findCategoryById(categoryId)
+        val product = Product(price = price, brand = brand, category = category)
         productJpaRepository.save(product)
         return ProductDto.from(product)
     }
@@ -31,7 +34,8 @@ class ProductService(
     fun updateProduct(productId: Long, price: Int, categoryId: Long): ProductDto {
         validatePrice(price)
         val product = findProductById(productId)
-        product.update(price = price, categoryId = categoryId)
+        val category = findCategoryById(categoryId)
+        product.update(price = price, category = category)
         return ProductDto.from(product)
     }
 
@@ -47,13 +51,14 @@ class ProductService(
             ?: throw DataNotFoundException(ErrorCode.DATA_NOT_FOUND, "상품 정보를 찾을 수 없습니다.")
     }
 
-    fun validateBrandAndCategory(brandId: Long, categoryId: Long) {
-        if (!brandJpaRepository.existsById(brandId)) {
-            throw DataNotFoundException(ErrorCode.DATA_NOT_FOUND, "브랜드 정보를 찾을 수 없습니다.")
-        }
-        if (!categoryJpaRepository.existsById(categoryId)) {
-            throw DataNotFoundException(ErrorCode.DATA_NOT_FOUND, "카테고리 정보를 찾을 수 없습니다.")
-        }
+    fun findBrandById(brandId: Long): Brand {
+        return brandJpaRepository.findByIdOrNull(brandId)
+            ?: throw DataNotFoundException(ErrorCode.DATA_NOT_FOUND, "브랜드 정보를 찾을 수 없습니다.")
+    }
+
+    fun findCategoryById(categoryId: Long): Category {
+        return categoryJpaRepository.findByIdOrNull(categoryId)
+            ?: throw DataNotFoundException(ErrorCode.DATA_NOT_FOUND, "카테고리 정보를 찾을 수 없습니다.")
     }
 
     fun validatePrice(price: Int) {

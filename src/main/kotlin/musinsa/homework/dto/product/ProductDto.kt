@@ -13,8 +13,8 @@ data class ProductDto(
             return ProductDto(
                 productId = product.id,
                 price = product.price,
-                brandId = product.brandId,
-                categoryId = product.categoryId
+                brandId = product.brand.id,
+                categoryId = product.category.id
             )
         }
     }
