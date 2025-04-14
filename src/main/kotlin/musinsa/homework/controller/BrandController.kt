@@ -1,6 +1,5 @@
 package musinsa.homework.controller
 
-import musinsa.homework.domain.Brand
 import musinsa.homework.dto.BrandDto
 import musinsa.homework.dto.CreateBrandRequest
 import musinsa.homework.dto.UpdateBrandRequest
