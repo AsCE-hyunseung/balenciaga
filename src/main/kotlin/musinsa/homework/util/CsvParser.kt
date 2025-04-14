@@ -6,9 +6,7 @@ import musinsa.homework.domain.Product
 import java.io.File
 
 class CsvParser {
-    /**
-     * CSV 파일 경로를 받아서, 브랜드, 카테고리, 상품 리스트를 반환합니다.
-     */
+    // CSV 파일 경로를 받아서, 브랜드, 카테고리, 상품 리스트를 반환합니다.
     fun parseCsvData(filePath: String): Triple<List<Brand>, List<Category>, List<Product>> {
         val file = File(filePath)
         if (!file.exists()) return Triple(emptyList(), emptyList(), emptyList())

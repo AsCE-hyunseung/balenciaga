@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component
 class CsvDataLoader(
     private val brandJpaRepository: BrandJpaRepository,
     private val categoryJpaRepository: CategoryJpaRepository,
-    private val productJpaRepository: ProductJpaRepository,
+    private val productJpaRepository: ProductJpaRepository
 ) {
     private val logger = logger()
 

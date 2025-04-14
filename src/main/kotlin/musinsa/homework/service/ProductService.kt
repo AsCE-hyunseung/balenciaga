@@ -5,6 +5,5 @@ import org.springframework.stereotype.Service
 
 @Service
 class ProductService(
-    private val productJpaRepository: ProductJpaRepository,
-) {
-}
+    private val productJpaRepository: ProductJpaRepository
+)
