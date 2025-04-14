@@ -1,6 +1,7 @@
 package musinsa.homework.controller
 
 import musinsa.homework.domain.Brand
+import musinsa.homework.dto.BrandDto
 import musinsa.homework.dto.CreateBrandRequest
 import musinsa.homework.dto.UpdateBrandRequest
 import musinsa.homework.service.BrandService
@@ -19,13 +20,13 @@ class BrandController(
 ) {
     // 브랜드 추가 api
     @PostMapping
-    fun createBrand(@RequestBody request: CreateBrandRequest): Brand {
+    fun createBrand(@RequestBody request: CreateBrandRequest): BrandDto {
         return brandService.createBrand(request.brandName)
     }
 
     // 브랜드 정보 업데이트 api
     @PatchMapping("/{brandId}")
-    fun updateBrand(@PathVariable brandId: Long, @RequestBody request: UpdateBrandRequest): Brand {
+    fun updateBrand(@PathVariable brandId: Long, @RequestBody request: UpdateBrandRequest): BrandDto {
         return brandService.updateBrand(brandId, request.brandName)
     }
 

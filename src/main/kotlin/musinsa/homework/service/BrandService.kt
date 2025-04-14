@@ -1,6 +1,7 @@
 package musinsa.homework.service
 
 import musinsa.homework.domain.Brand
+import musinsa.homework.dto.BrandDto
 import musinsa.homework.exception.DataNotFoundException
 import musinsa.homework.exception.ErrorCode.DATA_NOT_FOUND
 import musinsa.homework.exception.ErrorCode.POLICY_VIOLATION
@@ -17,16 +18,17 @@ class BrandService(
     private val brandJpaRepository: BrandJpaRepository
 ) {
     @Transactional
-    fun createBrand(brandName: String): Brand {
+    fun createBrand(brandName: String): BrandDto {
         val brand = Brand(name = brandName)
-        return brandJpaRepository.save(brand)
+        brandJpaRepository.save(brand)
+        return BrandDto.from(brand)
     }
 
     @Transactional
-    fun updateBrand(brandId: Long, brandName: String): Brand {
+    fun updateBrand(brandId: Long, brandName: String): BrandDto {
         val brand = findBrandById(brandId)
         brand.updateName(brandName)
-        return brand
+        return BrandDto.from(brand)
     }
 
     @Transactional
