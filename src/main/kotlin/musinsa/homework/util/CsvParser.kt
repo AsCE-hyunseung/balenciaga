@@ -47,8 +47,8 @@ class CsvParser {
                 products.add(
                     Product(
                         id = productIdCounter++,
-                        brandId = brandId,
-                        categoryId = categoryId,
+                        brand = brands.first { it.id == brandId },
+                        category = categories.first { it.id == categoryId },
                         price = price
                     )
                 )
