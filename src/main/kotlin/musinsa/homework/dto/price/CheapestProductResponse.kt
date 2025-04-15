@@ -7,6 +7,7 @@ data class CheapestProductResponse(
     val totalPrice: Int
 )
 
+// category에 상품이 없을 수도 있음
 data class CategoryCheapestProduct(
     val categoryName: String,
     val brandName: String?,

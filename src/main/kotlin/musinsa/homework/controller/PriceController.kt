@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController
 class PriceController(
     private val priceService: PriceService
 ) {
-
     // 카테고리별 최저 가격 브랜드, 상품 정보 조회 api
     @GetMapping("/cheapest-products")
     fun getCheapestProductsByCategory(): CheapestProductResponse {

@@ -8,8 +8,8 @@ import musinsa.homework.dto.price.CheapestBrandInfo
 import musinsa.homework.dto.price.CheapestBrandProduct
 import musinsa.homework.dto.price.CheapestBrandResponse
 import musinsa.homework.dto.price.CheapestProductResponse
+import musinsa.homework.dto.price.LowestAndHighestProductInfo
 import musinsa.homework.dto.price.LowestAndHighestProductResponse
-import musinsa.homework.dto.product.ProductDto
 import musinsa.homework.exception.DataNotFoundException
 import musinsa.homework.exception.ErrorCode
 import musinsa.homework.exception.PolicyException
@@ -41,10 +41,9 @@ class PriceService(
         }
 
         return LowestAndHighestProductResponse(
-            categoryId = category.id,
             categoryName = category.name,
-            lowestProduct = ProductDto.from(lowestProduct!!),
-            highestProduct = ProductDto.from(highestProduct!!)
+            lowestProduct = LowestAndHighestProductInfo.from(lowestProduct!!),
+            highestProduct = LowestAndHighestProductInfo.from(highestProduct!!)
         )
     }
 
