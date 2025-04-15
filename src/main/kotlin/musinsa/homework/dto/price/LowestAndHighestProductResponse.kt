@@ -1,8 +1,8 @@
-package musinsa.homework.dto.priceinquiry
+package musinsa.homework.dto.price
 
 import musinsa.homework.dto.product.ProductDto
 
-data class LowestAndHighestProductDto(
+data class LowestAndHighestProductResponse(
     val categoryId: Long,
     val categoryName: String,
     val lowestProduct: ProductDto,

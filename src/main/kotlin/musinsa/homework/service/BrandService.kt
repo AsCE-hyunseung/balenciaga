@@ -45,7 +45,7 @@ class BrandService(
     }
 
     private fun validateNoAssociatedProducts(brandId: Long) {
-        if (productJpaRepository.findAllByBrandId(brandId).isNotEmpty()) {
+        if (productJpaRepository.findAllByBrandIdOrderByCategoryIdAsc(brandId).isNotEmpty()) {
             throw PolicyException(POLICY_VIOLATION, "해당 브랜드에 속한 상품이 존재하여 삭제할 수 없습니다.")
         }
     }

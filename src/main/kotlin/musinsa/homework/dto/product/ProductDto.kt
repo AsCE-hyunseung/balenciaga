@@ -6,7 +6,9 @@ data class ProductDto(
     val productId: Long,
     val price: Int,
     val brandId: Long,
-    val categoryId: Long
+    val brandName: String,
+    val categoryId: Long,
+    val categoryName: String
 ) {
     companion object {
         fun from(product: Product): ProductDto {
@@ -14,7 +16,9 @@ data class ProductDto(
                 productId = product.id,
                 price = product.price,
                 brandId = product.brand.id,
-                categoryId = product.category.id
+                brandName = product.brand.name,
+                categoryId = product.category.id,
+                categoryName = product.category.name
             )
         }
     }

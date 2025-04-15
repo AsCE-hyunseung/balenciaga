@@ -1,9 +1,13 @@
 package musinsa.homework.repository
 
 import musinsa.homework.domain.Product
+import org.springframework.data.jpa.repository.EntityGraph
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface ProductJpaRepository : JpaRepository<Product, Long> {
-    fun findAllByBrandId(brandId: Long): List<Product>
-    fun findAllByCategoryId(categoryId: Long): List<Product>
+    @EntityGraph(attributePaths = ["brand", "category"])
+    fun findAllByBrandIdOrderByCategoryIdAsc(brandId: Long): List<Product>
+
+    @EntityGraph(attributePaths = ["brand", "category"])
+    fun findAllByCategoryIdOrderByIdAsc(categoryId: Long): List<Product>
 }
