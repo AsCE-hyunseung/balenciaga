@@ -7,8 +7,13 @@ spring:
     username: sa
     password:
   jpa:
-    hibernate:
-      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: false
+        default_batch_fetch_size: 1000
     open-in-view: false
   h2:
     console:

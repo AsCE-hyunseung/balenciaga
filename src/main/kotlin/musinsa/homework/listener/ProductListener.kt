@@ -1,6 +1,7 @@
 package musinsa.homework.listener
 
 import jakarta.persistence.PostPersist
+import jakarta.persistence.PostRemove
 import jakarta.persistence.PostUpdate
 import musinsa.homework.domain.Product
 import org.springframework.context.ApplicationEventPublisher
@@ -10,14 +11,10 @@ import org.springframework.stereotype.Component
 class ProductListener(
     private val publisher: ApplicationEventPublisher
 ) {
-    @PostUpdate
-    fun postUpdate(product: Product) {
-        val event = ProductChangeEvent.from(product)
-        publisher.publishEvent(event)
-    }
-
     @PostPersist
-    fun postPersist(product: Product) {
+    @PostUpdate
+    @PostRemove
+    fun publish(product: Product) {
         val event = ProductChangeEvent.from(product)
         publisher.publishEvent(event)
     }

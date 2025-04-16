@@ -1,6 +1,5 @@
 package musinsa.homework.service
 
-import musinsa.homework.domain.Brand
 import musinsa.homework.domain.Category
 import musinsa.homework.domain.Product
 import musinsa.homework.dto.price.CategoryCheapestProduct
@@ -13,25 +12,26 @@ import musinsa.homework.dto.price.LowestAndHighestProductResponse
 import musinsa.homework.exception.DataNotFoundException
 import musinsa.homework.exception.ErrorCode
 import musinsa.homework.exception.PolicyException
-import musinsa.homework.repository.BrandJpaRepository
-import musinsa.homework.repository.CategoryJpaRepository
 import musinsa.homework.repository.ProductJpaRepository
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 class PriceService(
     private val productJpaRepository: ProductJpaRepository,
-    private val brandJpaRepository: BrandJpaRepository,
-    private val categoryJpaRepository: CategoryJpaRepository
+    private val categoryCacheService: CategoryCacheService,
+    private val priceCacheService: PriceCacheService
 ) {
     @Transactional(readOnly = true)
     fun getLowestAndHighestPriceProductsByCategoryName(categoryName: String): LowestAndHighestProductResponse {
         val category = findCategoryByName(categoryName)
-        val products = productJpaRepository.findAllByCategoryIdOrderByIdAsc(category.id)
 
-        val lowestProduct = products.minByOrNull { it.price }
-        val highestProduct = products.maxByOrNull { it.price }
+        val lowestPriceProductId = priceCacheService.getCategoryLowestPriceProductId(category.id)
+        val highestPriceProductId = priceCacheService.getCategoryHighestPriceProductId(category.id)
+
+        val lowestProduct = productJpaRepository.findByIdOrNull(lowestPriceProductId)
+        val highestProduct = productJpaRepository.findByIdOrNull(highestPriceProductId)
 
         if (lowestProduct == null && highestProduct == null) {
             throw DataNotFoundException(ErrorCode.DATA_NOT_FOUND, "해당 카테고리의 상품이 존재하지 않습니다.")
@@ -52,8 +52,8 @@ class PriceService(
         val categories = findAllCategory()
 
         val cheapestProducts = categories.map { category ->
-            val products = productJpaRepository.findAllByCategoryIdOrderByIdAsc(category.id)
-            val cheapestProduct = products.minByOrNull { it.price }
+            val cheapestProductId = priceCacheService.getCategoryLowestPriceProductId(category.id)
+            val cheapestProduct = productJpaRepository.findByIdOrNull(cheapestProductId)
 
             if (cheapestProduct == null) {
                 CategoryCheapestProduct(category.name, null, null)
@@ -70,17 +70,15 @@ class PriceService(
 
     @Transactional(readOnly = true)
     fun getCheapestBrands(): CheapestBrandResponse {
-        val brands = findAllBrand()
-        val brandPriceMap = brands.associateWith { brand ->
-            val products = findAllProductByBrandId(brand.id)
-            val totalPrice = products.sumOf { it.price }
-            totalPrice
-        }
-        val (cheapestBrand, totalPrice) = brandPriceMap.minBy { it.value }
-        val cheapestBrandProducts = findAllProductByBrandId(cheapestBrand.id)
+        val cheapestBrandId = priceCacheService.getLowestPriceBrandId() ?: throw DataNotFoundException(
+            ErrorCode.DATA_NOT_FOUND,
+            "최저 가격의 브랜드 정보를 찾을 수 없습니다."
+        )
+        val cheapestBrandProducts = findAllProductByBrandId(cheapestBrandId)
+        val totalPrice = cheapestBrandProducts.sumOf { it.price }
         return CheapestBrandResponse(
             lowestPrice = CheapestBrandInfo(
-                brandName = cheapestBrand.name,
+                brandName = cheapestBrandProducts.first().brand.name,
                 categories = cheapestBrandProducts.map { CheapestBrandProduct.from(it) },
                 totalPrice = totalPrice
             )
@@ -88,24 +86,16 @@ class PriceService(
     }
 
     private fun findCategoryByName(categoryName: String): Category {
-        return categoryJpaRepository.findByName(categoryName)
+        return categoryCacheService.getAllCategories().find { it.name == categoryName }
             ?: throw DataNotFoundException(ErrorCode.DATA_NOT_FOUND, "카테고리 정보를 찾을 수 없습니다.")
     }
 
     private fun findAllCategory(): List<Category> {
-        val categories = categoryJpaRepository.findAll()
+        val categories = categoryCacheService.getAllCategories()
         if (categories.isEmpty()) {
             throw DataNotFoundException(ErrorCode.DATA_NOT_FOUND, "카테고리 정보를 찾을 수 없습니다.")
         }
         return categories.sortedBy { it.id }
-    }
-
-    private fun findAllBrand(): List<Brand> {
-        val brands = brandJpaRepository.findAll()
-        if (brands.isEmpty()) {
-            throw DataNotFoundException(ErrorCode.DATA_NOT_FOUND, "브랜드 정보를 찾을 수 없습니다.")
-        }
-        return brands.sortedBy { it.id }
     }
 
     private fun findAllProductByBrandId(brandId: Long): List<Product> {

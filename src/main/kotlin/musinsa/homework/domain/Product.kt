@@ -10,6 +10,8 @@ import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.Table
+import musinsa.homework.exception.ErrorCode
+import musinsa.homework.exception.ParameterInvalidException
 import musinsa.homework.listener.ProductListener
 
 @Entity
@@ -30,8 +32,21 @@ class Product(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0L
 ) {
-    fun update(category: Category, price: Int) {
-        this.category = category
-        this.price = price
+    init {
+        if (price < 0) {
+            throw ParameterInvalidException(ErrorCode.INVALID_PARAMETER, "가격은 음수일 수 없습니다.")
+        }
+    }
+
+    fun update(category: Category?, price: Int?) {
+        category?.let {
+            this.category = it
+        }
+        price?.let {
+            if (it < 0) {
+                throw ParameterInvalidException(ErrorCode.INVALID_PARAMETER, "가격은 음수일 수 없습니다.")
+            }
+            this.price = it
+        }
     }
 }

@@ -22,7 +22,6 @@ class ProductService(
 ) {
     @Transactional
     fun createProduct(price: Int, brandId: Long, categoryId: Long): ProductDto {
-        validatePrice(price)
         val brand = findBrandById(brandId)
         val category = findCategoryById(categoryId)
         val product = Product(price = price, brand = brand, category = category)
@@ -31,10 +30,12 @@ class ProductService(
     }
 
     @Transactional
-    fun updateProduct(productId: Long, price: Int, categoryId: Long): ProductDto {
-        validatePrice(price)
+    fun updateProduct(productId: Long, price: Int?, categoryId: Long?): ProductDto {
+        if (price == null && categoryId == null) {
+            throw ParameterInvalidException(ErrorCode.INVALID_PARAMETER, "가격 또는 카테고리 ID는 필수입니다.")
+        }
         val product = findProductById(productId)
-        val category = findCategoryById(categoryId)
+        val category = categoryId?.let { findCategoryById(it) }
         product.update(price = price, category = category)
         return ProductDto.from(product)
     }
@@ -59,11 +60,5 @@ class ProductService(
     fun findCategoryById(categoryId: Long): Category {
         return categoryJpaRepository.findByIdOrNull(categoryId)
             ?: throw DataNotFoundException(ErrorCode.DATA_NOT_FOUND, "카테고리 정보를 찾을 수 없습니다.")
-    }
-
-    fun validatePrice(price: Int) {
-        if (price < 0) {
-            throw ParameterInvalidException(ErrorCode.INVALID_PARAMETER, "가격은 음수일 수 없습니다.")
-        }
     }
 }
