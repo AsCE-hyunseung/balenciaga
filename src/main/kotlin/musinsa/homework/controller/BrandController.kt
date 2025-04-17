@@ -4,6 +4,7 @@ import musinsa.homework.dto.brand.BrandDto
 import musinsa.homework.dto.brand.CreateBrandRequest
 import musinsa.homework.dto.brand.UpdateBrandRequest
 import musinsa.homework.service.BrandService
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -19,19 +20,20 @@ class BrandController(
 ) {
     // 브랜드 추가 api
     @PostMapping
-    fun createBrand(@RequestBody request: CreateBrandRequest): BrandDto {
-        return brandService.createBrand(request.brandName)
+    fun createBrand(@RequestBody request: CreateBrandRequest): ResponseEntity<BrandDto> {
+        return ResponseEntity.ok(brandService.createBrand(request.brandName))
     }
 
     // 브랜드 정보 업데이트 api
     @PatchMapping("/{brandId}")
-    fun updateBrand(@PathVariable brandId: Long, @RequestBody request: UpdateBrandRequest): BrandDto {
-        return brandService.updateBrand(brandId, request.brandName)
+    fun updateBrand(@PathVariable brandId: Long, @RequestBody request: UpdateBrandRequest): ResponseEntity<BrandDto> {
+        return ResponseEntity.ok(brandService.updateBrand(brandId, request.brandName))
     }
 
     // 브랜드 삭제 api
     @DeleteMapping("/{brandId}")
-    fun deleteBrand(@PathVariable brandId: Long): Boolean {
-        return brandService.deleteBrand(brandId)
+    fun deleteBrand(@PathVariable brandId: Long): ResponseEntity<Void> {
+        brandService.deleteBrand(brandId)
+        return ResponseEntity.noContent().build()
     }
 }

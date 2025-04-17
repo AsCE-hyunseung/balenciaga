@@ -4,6 +4,7 @@ import musinsa.homework.dto.product.CreateProductRequest
 import musinsa.homework.dto.product.ProductDto
 import musinsa.homework.dto.product.UpdateProductRequest
 import musinsa.homework.service.ProductService
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -19,19 +20,20 @@ class ProductController(
 ) {
     // 상품 추가 api
     @PostMapping
-    fun createProduct(@RequestBody request: CreateProductRequest): ProductDto {
-        return productService.createProduct(request.price, request.brandId, request.categoryId)
+    fun createProduct(@RequestBody request: CreateProductRequest): ResponseEntity<ProductDto> {
+        return ResponseEntity.ok(productService.createProduct(request.price, request.brandId, request.categoryId))
     }
 
     // 상품 정보 업데이트 api
     @PatchMapping("/{productId}")
-    fun updateProduct(@PathVariable productId: Long, @RequestBody request: UpdateProductRequest): ProductDto {
-        return productService.updateProduct(productId, request.price, request.categoryId)
+    fun updateProduct(@PathVariable productId: Long, @RequestBody request: UpdateProductRequest): ResponseEntity<ProductDto> {
+        return ResponseEntity.ok(productService.updateProduct(productId, request.price, request.categoryId))
     }
 
     // 상품 삭제 api
     @DeleteMapping("/{productId}")
-    fun deleteProduct(@PathVariable productId: Long): Boolean {
-        return productService.deleteProduct(productId)
+    fun deleteProduct(@PathVariable productId: Long): ResponseEntity<Void> {
+        productService.deleteProduct(productId)
+        return ResponseEntity.noContent().build()
     }
 }
