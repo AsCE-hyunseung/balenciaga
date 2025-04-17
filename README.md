@@ -23,7 +23,7 @@
 ├─ src
 │  ├─ main
 │  │  ├─ kotlin/musinsa/homework
-│  │  │  ├─ config           # Spring 설정 (Cache, DataSource 등)
+│  │  │  ├─ config            # Spring 설정 (Cache, DataSource 등)
 │  │  │  ├─ controller       # REST API Controller
 │  │  │  ├─ dto
 │  │  │  │  ├─ brand         # 브랜드 관련 DTO
@@ -35,7 +35,7 @@
 │  │  │  └─ BalenciagaApplication.kt  # Spring Boot 메인 클래스
 │  │  └─ resources
 │  │     ├─ application.yml  # 기본 설정 (H2, Cache 등)
-│  │     └─ data.sql         # (Optional) 샘플 데이터 시드
+│  │     └─ data.csv         # 샘플 데이터 시드
 │  ├─ test
 │  │  └─ kotlin/musinsa/homework  # 단위 테스트
 │  └─ integrationTest
