@@ -28,7 +28,8 @@ class PriceCacheServiceIntegrationTest(
 ) {
     @BeforeEach
     fun deleteInBatch() {
-        cacheManager.getCache("*")?.clear()
+        cacheManager.getCache(CacheKeys.LOWEST_PRICE_BRAND_ID)?.clear()
+        cacheManager.getCache(CacheKeys.CATEGORY_HIGHEST_PRICE_PRODUCT_ID)?.clear()
     }
 
     @Test
