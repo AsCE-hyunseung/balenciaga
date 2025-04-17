@@ -11,6 +11,9 @@ import org.springframework.transaction.annotation.Transactional
 class CategoryCacheService(
     private val categoryJpaRepository: CategoryJpaRepository
 ) {
+    /**
+     * 카테고리 정보를 캐싱합니다.
+     */
     @Transactional(readOnly = true)
     @Cacheable(value = [CATEGORY])
     fun getAllCategories(): List<Category> {
