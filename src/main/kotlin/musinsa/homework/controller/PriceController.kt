@@ -13,13 +13,17 @@ import org.springframework.web.bind.annotation.RestController
 class PriceController(
     private val priceService: PriceService
 ) {
-    // 카테고리별 최저 가격 브랜드, 상품 정보 조회 api
+    /**
+     * 카테고리별 최저 가격 브랜드, 상품 정보 조회 api
+     */
     @GetMapping("/cheapest-products")
     fun getCheapestProductsByCategory(): ResponseEntity<CheapestProductResponse> {
         return ResponseEntity.ok(priceService.getCheapestProductsByCategory())
     }
 
-    // 단일 브랜드로 모든 상품의 가격 총합이 가장 낮은 브랜드의 상품 조회 api
+    /**
+     * 단일 브랜드로 모든 상품의 가격 총합이 가장 낮은 브랜드의 상품 조회 api
+     */
     @GetMapping("/cheapest-brands")
     fun getCheapestBrands(): ResponseEntity<CheapestBrandResponse> {
         return ResponseEntity.ok(priceService.getCheapestBrands())

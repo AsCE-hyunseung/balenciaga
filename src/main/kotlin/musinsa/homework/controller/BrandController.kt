@@ -12,25 +12,34 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.net.URI
 
 @RestController
 @RequestMapping("/api/v1/brands")
 class BrandController(
     private val brandService: BrandService
 ) {
-    // 브랜드 추가 api
+    /**
+     * 브랜드 추가 api
+     */
     @PostMapping
     fun createBrand(@RequestBody request: CreateBrandRequest): ResponseEntity<BrandDto> {
-        return ResponseEntity.ok(brandService.createBrand(request.brandName))
+        val created = brandService.createBrand(request.brandName)
+        val uri = URI.create("/api/v1/brands/${created.brandId}")
+        return ResponseEntity.created(uri).body(created)
     }
 
-    // 브랜드 정보 업데이트 api
+    /**
+     * 브랜드 정보 업데이트 api
+     */
     @PatchMapping("/{brandId}")
     fun updateBrand(@PathVariable brandId: Long, @RequestBody request: UpdateBrandRequest): ResponseEntity<BrandDto> {
         return ResponseEntity.ok(brandService.updateBrand(brandId, request.brandName))
     }
 
-    // 브랜드 삭제 api
+    /**
+     * 브랜드 삭제 api
+     */
     @DeleteMapping("/{brandId}")
     fun deleteBrand(@PathVariable brandId: Long): ResponseEntity<Void> {
         brandService.deleteBrand(brandId)

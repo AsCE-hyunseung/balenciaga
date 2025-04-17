@@ -12,25 +12,34 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.net.URI
 
 @RestController
 @RequestMapping("/api/v1/products")
 class ProductController(
     private val productService: ProductService
 ) {
-    // 상품 추가 api
+    /**
+     * 상품 추가 api
+     */
     @PostMapping
     fun createProduct(@RequestBody request: CreateProductRequest): ResponseEntity<ProductDto> {
-        return ResponseEntity.ok(productService.createProduct(request.price, request.brandId, request.categoryId))
+        val created = productService.createProduct(request.price, request.brandId, request.categoryId)
+        val uri = URI.create("/api/v1/products/${created.productId}")
+        return ResponseEntity.created(uri).body(created)
     }
 
-    // 상품 정보 업데이트 api
+    /**
+     * 상품 정보 업데이트 api
+     */
     @PatchMapping("/{productId}")
     fun updateProduct(@PathVariable productId: Long, @RequestBody request: UpdateProductRequest): ResponseEntity<ProductDto> {
         return ResponseEntity.ok(productService.updateProduct(productId, request.price, request.categoryId))
     }
 
-    // 상품 삭제 api
+    /**
+     * 상품 삭제 api
+     */
     @DeleteMapping("/{productId}")
     fun deleteProduct(@PathVariable productId: Long): ResponseEntity<Void> {
         productService.deleteProduct(productId)
