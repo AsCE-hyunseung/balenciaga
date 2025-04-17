@@ -1,5 +1,6 @@
 package musinsa.homework.controller
 
+import jakarta.validation.Valid
 import musinsa.homework.dto.product.CreateProductRequest
 import musinsa.homework.dto.product.ProductDto
 import musinsa.homework.dto.product.UpdateProductRequest
@@ -23,7 +24,10 @@ class ProductController(
      * 상품 추가 api
      */
     @PostMapping
-    fun createProduct(@RequestBody request: CreateProductRequest): ResponseEntity<ProductDto> {
+    fun createProduct(
+        @RequestBody @Valid
+        request: CreateProductRequest
+    ): ResponseEntity<ProductDto> {
         val created = productService.createProduct(request.price, request.brandId, request.categoryId)
         val uri = URI.create("/api/v1/products/${created.productId}")
         return ResponseEntity.created(uri).body(created)

@@ -1,5 +1,6 @@
 package musinsa.homework.controller
 
+import jakarta.validation.Valid
 import musinsa.homework.dto.brand.BrandDto
 import musinsa.homework.dto.brand.CreateBrandRequest
 import musinsa.homework.dto.brand.UpdateBrandRequest
@@ -23,7 +24,10 @@ class BrandController(
      * 브랜드 추가 api
      */
     @PostMapping
-    fun createBrand(@RequestBody request: CreateBrandRequest): ResponseEntity<BrandDto> {
+    fun createBrand(
+        @RequestBody @Valid
+        request: CreateBrandRequest
+    ): ResponseEntity<BrandDto> {
         val created = brandService.createBrand(request.brandName)
         val uri = URI.create("/api/v1/brands/${created.brandId}")
         return ResponseEntity.created(uri).body(created)
