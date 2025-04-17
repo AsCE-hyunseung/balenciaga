@@ -30,6 +30,9 @@ class PriceCacheService(
     fun cacheEvictCategoryLowestPriceProductId(categoryId: Long) {
     }
 
+    /**
+     * 브랜드별 상품 가격 총 합이 가장 낮은 브랜드 ID를 캐싱합니다.
+     */
     @Cacheable(value = [LOWEST_PRICE_BRAND_ID])
     @Transactional(readOnly = true)
     fun getLowestPriceBrandId(): Long? {
@@ -51,6 +54,9 @@ class PriceCacheService(
         return cheapestBrand.id
     }
 
+    /**
+     * 카테고리별 상품 가격 총 합이 가장 높은 상품 ID를 캐싱합니다.
+     */
     @Cacheable(value = [CATEGORY_HIGHEST_PRICE_PRODUCT_ID], key = "#categoryId")
     @Transactional(readOnly = true)
     fun getCategoryHighestPriceProductId(categoryId: Long): Long? {
@@ -59,6 +65,9 @@ class PriceCacheService(
         return lowestProduct.id
     }
 
+    /**
+     * 카테고리별 상품 가격 총 합이 가장 낮은 상품 ID를 캐싱합니다.
+     */
     @Cacheable(value = [CATEGORY_LOWEST_PRICE_PRODUCT_ID], key = "#categoryId")
     @Transactional(readOnly = true)
     fun getCategoryLowestPriceProductId(categoryId: Long): Long? {

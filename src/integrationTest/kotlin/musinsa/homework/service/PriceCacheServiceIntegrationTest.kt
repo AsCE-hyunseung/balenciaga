@@ -52,7 +52,7 @@ class PriceCacheServiceIntegrationTest(
     }
 
     @Test
-    fun `LOWEST_PRICE_BRAND_ID brand에 product가 없으면 null 캐싱을 한다`() {
+    fun `LOWEST_PRICE_BRAND_ID 모든 brand에 product가 없으면 null 캐싱을 한다`() {
         // given
         productJpaRepository.deleteAllInBatch()
         priceCacheService.getLowestPriceBrandId()
