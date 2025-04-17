@@ -66,17 +66,17 @@
 
 ## API 엔드포인트
 
-| 구분  | 메서드    | URL                                     | 설명                        |
-|-----|--------|-----------------------------------------|---------------------------|
-| 1   | GET    | `/api/v1/prices/cheapest-products`      | 카테고리별 최저가 상품+총액 조회        |
-| 2   | GET    | `/api/v1/prices/cheapest-brands`        | 단일 브랜드 전 카테고리 최저 총액 조회    |
-| 3   | GET    | `/api/v1/categories/{name}/price-range` | 카테고리명으로 최저가·최고가 브랜드·상품 조회 |
-| 4-1 | POST   | `/api/v1/brands`                        | 브랜드 생성                    |
-| 4-2 | PATCH  | `/api/v1/brands/{id}`                   | 브랜드 업데이트                  |
-| 4-3 | DELETE | `/api/v1/brands/{id}`                   | 브랜드 삭제                    |
-| 4-4 | POST   | `/api/v1/products`                      | 상품 생성                     |
-| 4-5 | PATCH  | `/api/v1/products/{id}`                 | 상품 업데이트                   |
-| 4-6 | DELETE | `/api/v1/products/{id}`                 | 상품 삭제                     |
+| 구분  | 메서드    | URL                                             | 설명                                          |
+|-----|--------|-------------------------------------------------|---------------------------------------------|
+| 1   | GET    | `/api/v1/prices/cheapest-products`              | 카테고리별 최저가 상품+총액 조회                          |
+| 2   | GET    | `/api/v1/prices/cheapest-brands`                | 단일 브랜드 전 카테고리 최저 총액 조회                      |
+| 3   | GET    | `/api/v1/categories/{categoryName}/price-range` | 카테고리명으로 최저가·최고가 브랜드·상품 조회 (카테고리 이름은 영어로 입력) |
+| 4-1 | POST   | `/api/v1/brands`                                | 브랜드 생성                                      |
+| 4-2 | PATCH  | `/api/v1/brands/{id}`                           | 브랜드 업데이트                                    |
+| 4-3 | DELETE | `/api/v1/brands/{id}`                           | 브랜드 삭제                                      |
+| 4-4 | POST   | `/api/v1/products`                              | 상품 생성                                       |
+| 4-5 | PATCH  | `/api/v1/products/{id}`                         | 상품 업데이트                                     |
+| 4-6 | DELETE | `/api/v1/products/{id}`                         | 상품 삭제                                       |
 
 ---
 ## 테스트 실행
