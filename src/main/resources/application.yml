@@ -2,7 +2,7 @@ spring:
   application:
     name: musinsa-homework
   datasource:
-    url: jdbc:h2:mem:testdb;
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;INIT=SET REFERENTIAL_INTEGRITY FALSE
     driverClassName: org.h2.Driver
     username: sa
     password:
