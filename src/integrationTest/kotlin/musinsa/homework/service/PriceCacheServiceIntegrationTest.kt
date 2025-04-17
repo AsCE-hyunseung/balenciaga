@@ -14,9 +14,11 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.cache.CacheManager
 import org.springframework.cache.interceptor.SimpleKey
 import org.springframework.test.context.TestConstructor
+import org.springframework.transaction.annotation.Transactional
 
 @SpringBootTest
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
+@Transactional
 class PriceCacheServiceIntegrationTest(
     private val productJpaRepository: ProductJpaRepository,
     private val brandJpaRepository: BrandJpaRepository,

@@ -60,20 +60,19 @@ class ProductServiceTest {
     fun `updateProduct 가격이 음수면 에러를 낸다`() {
         // given
         val productId = kotlinFixture<Long>()
-        val categoryId = kotlinFixture<Long>()
+        val category = kotlinFixture<Category> {
+            property(Category::id) { kotlinFixture<Long>() }
+        }
         val price = -1
         every { productJpaRepository.findByIdOrNull(productId) } returns kotlinFixture<Product> {
             property(Product::price) { 10000 }
+            property(Product::category) { category }
         }
-        every { categoryCacheService.getAllCategories() } returns listOf(
-            kotlinFixture<Category> {
-                property(Category::id) { categoryId }
-            }
-        )
+        every { categoryCacheService.getAllCategories() } returns listOf(category)
 
         // when, then
         shouldThrow<ParameterInvalidException> {
-            sut.updateProduct(productId, price, kotlinFixture())
+            sut.updateProduct(productId, price, category.id)
         }
     }
 
