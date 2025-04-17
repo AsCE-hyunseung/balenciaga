@@ -33,7 +33,10 @@ class ProductController(
      * 상품 정보 업데이트 api
      */
     @PatchMapping("/{productId}")
-    fun updateProduct(@PathVariable productId: Long, @RequestBody request: UpdateProductRequest): ResponseEntity<ProductDto> {
+    fun updateProduct(
+        @PathVariable productId: Long,
+        @RequestBody request: UpdateProductRequest
+    ): ResponseEntity<ProductDto> {
         return ResponseEntity.ok(productService.updateProduct(productId, request.price, request.categoryId))
     }
 
