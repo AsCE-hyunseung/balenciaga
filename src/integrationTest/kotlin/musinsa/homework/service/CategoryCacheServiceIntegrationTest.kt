@@ -6,15 +6,15 @@ import musinsa.homework.domain.Category
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.cache.concurrent.ConcurrentMapCacheManager
+import org.springframework.cache.CacheManager
 import org.springframework.cache.interceptor.SimpleKey
 import org.springframework.test.context.TestConstructor
 
 @SpringBootTest
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
-class CategoryCacheServiceTest(
-    private val cacheManager: ConcurrentMapCacheManager,
-    private val categoryCacheService: CategoryCacheService,
+class CategoryCacheServiceIntegrationTest(
+    private val cacheManager: CacheManager,
+    private val categoryCacheService: CategoryCacheService
 ) {
 
     @BeforeEach
@@ -31,6 +31,5 @@ class CategoryCacheServiceTest(
         val result = cacheManager.getCache(CacheKeys.CATEGORY)?.get(SimpleKey())?.get() as List<Category>
         // then
         result.size shouldNotBe 0
-
     }
 }

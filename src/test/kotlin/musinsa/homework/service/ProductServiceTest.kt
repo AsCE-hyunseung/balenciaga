@@ -62,7 +62,9 @@ class ProductServiceTest {
         val productId = kotlinFixture<Long>()
         val categoryId = kotlinFixture<Long>()
         val price = -1
-        every { productJpaRepository.findByIdOrNull(productId) } returns kotlinFixture<Product>()
+        every { productJpaRepository.findByIdOrNull(productId) } returns kotlinFixture<Product> {
+            property(Product::price) { 10000 }
+        }
         every { categoryCacheService.getAllCategories() } returns listOf(
             kotlinFixture<Category> {
                 property(Category::id) { categoryId }

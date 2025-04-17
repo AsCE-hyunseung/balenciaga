@@ -33,3 +33,29 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+// build.gradle (Groovy DSL) 최하단에 추가
+sourceSets {
+    integrationTest {
+        java.srcDir file('src/integrationTest/kotlin')
+        resources.srcDir file('src/integrationTest/resources')
+        compileClasspath += sourceSets.main.output + sourceSets.test.output
+        runtimeClasspath += sourceSets.main.output + sourceSets.test.output
+    }
+}
+
+configurations {
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+}
+
+task integrationTest(type: Test) {
+    description = 'Runs integration tests.'
+    group = 'verification'
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    shouldRunAfter test
+    useJUnitPlatform()
+}
+
+check.dependsOn integrationTest
