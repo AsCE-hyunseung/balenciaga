@@ -34,7 +34,7 @@
 │  │  │  ├─ service          # 비즈니스 로직 Service
 │  │  │  └─ BalenciagaApplication.kt  # Spring Boot 메인 클래스
 │  │  └─ resources
-│  │     ├─ application.yml  # 기본 설정 (H2, Cache 등)
+│  │     ├─ application.yml  # 기본 설정 (H2 등)
 │  │     └─ data.csv         # 샘플 데이터 시드
 │  ├─ test
 │  │  └─ kotlin/musinsa/homework  # 단위 테스트
