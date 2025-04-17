@@ -76,7 +76,6 @@ class GlobalExceptionHandler {
         request: HttpServletRequest
     ): ResponseEntity<ErrorResponse> {
         val status = HttpStatus.BAD_REQUEST
-        val message = e.rootCause?.message ?: e.message ?: "잘못된 요청 형식입니다."
 
         val errorResponse = ErrorResponse(
             code = ErrorCode.INVALID_PARAMETER.toString(),

@@ -87,8 +87,8 @@ class PriceCacheServiceIntegrationTest(
         }
 
         // when
-        val result = categories.map {
-            cacheManager.getCache(CacheKeys.CATEGORY_HIGHEST_PRICE_PRODUCT_ID)!!.get(it.id).get()
+        val result = categories.mapNotNull {
+            cacheManager.getCache(CacheKeys.CATEGORY_HIGHEST_PRICE_PRODUCT_ID)?.get(it.id)?.get()
         }
 
         // then

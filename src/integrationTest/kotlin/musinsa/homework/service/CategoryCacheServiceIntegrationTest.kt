@@ -2,7 +2,6 @@ package musinsa.homework.service
 
 import io.kotest.matchers.shouldNotBe
 import musinsa.homework.config.CacheKeys
-import musinsa.homework.domain.Category
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
@@ -28,7 +27,7 @@ class CategoryCacheServiceIntegrationTest(
         categoryCacheService.getAllCategories()
 
         // when
-        val result = cacheManager.getCache(CacheKeys.CATEGORY)?.get(SimpleKey())?.get() as List<Category>
+        val result = cacheManager.getCache(CacheKeys.CATEGORY)?.get(SimpleKey())?.get() as List<*>
         // then
         result.size shouldNotBe 0
     }
